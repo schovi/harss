@@ -10,11 +10,13 @@ import Data.List
 import Network.HTTP.Types (status200)
 import Network.Wai
 import Network.Wai.Handler.Warp
+import System.Environment (getArgs)
 import Text.HandsomeSoup
 import Text.XML.HXT.Core hiding (app)
 import Text.XML.Light
 import Text.RSS.Export
 import Text.RSS.Syntax
+
 
 data Article = Article { name   :: String
                        , link   :: String
@@ -46,5 +48,7 @@ app _ = do
   response <- liftIO . liftM (BU.fromString . mkFeed) $ getArticles "http://www.dfens-cz.com/"
   return . ResponseBuilder status200 [ ("Content-Type", "application/xml") ] $ copyByteString response
 
-main = run 3000 app
+main = do
+  [port] <- getArgs
+  run (read port) app
 
