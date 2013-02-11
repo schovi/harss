@@ -1,1 +1,1 @@
-web: ./dist/build/HaRSS/HaRSS -p $PORT
+web: ./dist/build/HaRSS/HaRSS $PORT
